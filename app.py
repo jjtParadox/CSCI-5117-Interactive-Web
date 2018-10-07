@@ -17,6 +17,15 @@ def home():
     return render_template("home.html")
 
 
+@app.route('/survey')
+def survey():
+    return 'Survey'
+
+
+@app.route('/decline')
+def decline():
+    return 'Decline'
+
 # @app.route('/people', methods=['GET', 'POST'])
 # def people():
 #     if request.method == 'POST':
