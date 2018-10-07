@@ -19,7 +19,7 @@ def home():
 
 @app.route('/survey')
 def survey():
-    return 'Survey'
+    return render_template("survey.html")
 
 
 @app.route('/decline')
