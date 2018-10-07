@@ -24,7 +24,7 @@ def survey():
 
 @app.route('/decline')
 def decline():
-    return 'Decline'
+    return render_template("decline.html")
 
 # @app.route('/people', methods=['GET', 'POST'])
 # def people():
