@@ -4,9 +4,57 @@
 {% block content %}
 
 <div class="content-wrapper">
-   <div class="content">
-      <h2 class="is-center">Here is the survey:</h2>
-   </div>
+    <div class="content">
+        <h2 class="is-center">A survey on tabletop roleplaying experience:</h2>
+        <form class="pure-form pure-form-stacked survey">
+            <label for="name">Name (minimum 3 characters)</label>
+            <input id="name" type="text" name="name" required pattern=".{3}.*" />
+            <fieldset>
+                <label>Have you participated in a tabletop RPG before?</label>
+                <label for="option-one" class="pure-radio participated">
+                    <input id="option-one" type="radio" name="participation" value="yes">
+                    Yes
+                </label>
+                <label for="option-two" class="pure-radio">
+                    <input id="option-two" type="radio" name="participation" value="known">
+                    No, but I've heard of them
+                </label>
+                <label for="option-three" class="pure-radio">
+                    <input id="option-three" type="radio" name="participation" value="no">
+                    No, and I've never heard of them before
+                </label>
+            </fieldset>
+            <fieldset class="participation-q">
+                <label for="participation">When was the last time you participated in a tabletop roleplaying game?</label>
+                <select id="participation" name="last-participated">
+                    <option value="week" selected>Within the last week</option>
+                    <option value="month">Within the last month</option>
+                    <option value="year">Within the last year</option>
+                    <option value="years">More than a year ago</option>
+                </select>
+                <label for="participation-info">What game were you playing, and what was your experience?</label>
+                <textarea id="participation-info" name="participation-info"></textarea>
+            </fieldset>
+            <label for="learn-more" class="pure-checkbox">
+                <input id="learn-more" name="learn-more" type="checkbox">
+                I am interested in learning more about tabletop roleplaying games.
+            </label>
+            <button type="submit" class="pure-button pure-button-primary" formaction="{{ url_for("thanks") }}" formmethod="post">Submit</button>
+        </form>
+    </div>
 </div>
+
+<script type="text/javascript">
+    if(!$("#option-one").is(":checked")) {
+        $(".participation-q").hide();
+    }
+    $(".pure-radio").click(function() {
+        if($("#option-one").is(":checked")) {
+            $(".participation-q").show();
+        } else {
+            $(".participation-q").hide();
+        }
+    });
+</script>
 
 {% endblock %}
