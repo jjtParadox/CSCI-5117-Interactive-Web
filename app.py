@@ -26,6 +26,12 @@ def survey():
 def decline():
     return render_template("decline.html")
 
+
+@app.route('/thanks', methods=['GET', 'POST'])
+def thanks():
+    app.logger.info(request.form)
+    return render_template("thanks.html")
+
 # @app.route('/people', methods=['GET', 'POST'])
 # def people():
 #     if request.method == 'POST':
