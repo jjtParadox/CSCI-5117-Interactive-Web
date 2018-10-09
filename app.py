@@ -31,12 +31,12 @@ def decline():
 def thanks():
     if request.method == 'POST':
         name = request.form['name']
-        participation = request.form['participation']
+        participation = request.form['participation'] if 'participation' in request.form else None
         last_participated, participation_info = None, None
         if participation == 'yes':
-            last_participated = request.form['last-participated']
-            participation_info = request.form['participation-info']
-        learn_more = request.form['learn-more'] if 'learn-more' in request.form else 'no'
+            last_participated = request.form['last-participated'] if 'last-participated' in request.form else None
+            participation_info = request.form['participation-info'] if 'participation-info' in request.form else None
+        learn_more = 'learn-more' in request.form and request.form['learn-more'] == 'on'
         with db.get_db_cursor(commit=True) as cur:
             cur.execute("insert into results (name, participation, last_participated, participation_info, learn_more) values (%s, %s, %s, %s, %s)",
                         (name, participation, last_participated, participation_info, learn_more,))
