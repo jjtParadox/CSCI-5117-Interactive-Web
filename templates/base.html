@@ -13,13 +13,11 @@
     <title>{% block title %}{% endblock %} | 5117 Survey - Jackson Turner</title>
 </head>
 <body style="">
-<!--<div id="menu">-->
-<!--<a href="">home</a>-->
-<!--|-->
-<!--<a href="">people</a>-->
-<!--|-->
-<!--<a href="">api (foo)</a>-->
-<!--</div>-->
+<div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
+    <ul class="pure-menu-list" style="float: left;">
+        <li class="pure-menu-item"><a class="pure-menu-link" href="{{ url_for("home") }}">Home</a></li>
+    </ul>
+</div>
 <div id="content" style="">{% block content %}{% endblock %}</div>
 
 </body>
