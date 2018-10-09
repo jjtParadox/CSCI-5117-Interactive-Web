@@ -5,9 +5,9 @@ import db
 app = Flask(__name__)
 
 
-# @app.before_first_request
-# def initialize():
-#     db.setup()
+@app.before_first_request
+def initialize():
+    db.setup()
 
 
 @app.route('/')
@@ -29,7 +29,17 @@ def decline():
 
 @app.route('/thanks', methods=['GET', 'POST'])
 def thanks():
-    app.logger.info(request.form)
+    if request.method == 'POST':
+        name = request.form['name']
+        participation = request.form['participation']
+        last_participated, participation_info = None, None
+        if participation == 'yes':
+            last_participated = request.form['last-participated']
+            participation_info = request.form['participation-info']
+        learn_more = request.form['learn-more'] if 'learn-more' in request.form else 'no'
+        with db.get_db_cursor(commit=True) as cur:
+            cur.execute("insert into results (name, participation, last_participated, participation_info, learn_more) values (%s, %s, %s, %s, %s)",
+                        (name, participation, last_participated, participation_info, learn_more,))
     return render_template("thanks.html")
 
 # @app.route('/people', methods=['GET', 'POST'])
