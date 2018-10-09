@@ -1,17 +1,12 @@
 # CSCI 5117 Fall 2018 -- Module 1 Homework
 
-Instructions:
-https://docs.google.com/document/d/1v7CcAjL96VG3WelYHjXTs67zxbmfxxy5CbKI0Ne7ukE/edit
+## Author
 
-Please fill out all of the following sections to help us grade your submission:
+* Jackson Turner, turne775@umn.edu
 
-## Student (to be completed individually)
+## Link
 
-* First Last, x500@umn.edu
-
-## Link to Site
-
-<https://TODO.herokuapp.com/>
+<https://csci-5117-survey.herokuapp.com/>
 
 ## Challenge Task
 
