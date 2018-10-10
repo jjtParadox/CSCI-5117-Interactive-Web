@@ -41,8 +41,14 @@ def thanks():
     return render_template("thanks.html")
 
 
+@app.route('/admin/summary')
+def summary():
+    data = api_results(False)
+    return render_template("summary.html", data=data)
+
+
 @app.route('/api/results')
-def api_results():
+def api_results(json=True):
     with db.get_db_cursor() as cur:
         cur.execute("select * from results")
         rows = cur.fetchall()
@@ -51,7 +57,7 @@ def api_results():
     results = []
     for item in rows:
         results.append(dict(item))
-    return jsonify(results)
+    return jsonify(results) if json else results
 
 
 if __name__ == '__main__':
