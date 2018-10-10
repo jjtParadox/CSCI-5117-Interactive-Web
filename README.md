@@ -10,7 +10,6 @@
 
 ## Challenge Task
 
-* I started the challenge task: [yes/no]
-* I completed the challenge task: [yes/no]
+* I started and completed the challenge task
 
-(if applicable) link: <https://TODO.herokuapp.com/admin/summary>
+link: <https://csci-5117-survey.herokuapp.com/admin/summary>
