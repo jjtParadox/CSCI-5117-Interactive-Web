@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<!--<form class="pure-form pure-form-stacked" method="post" action="/people">-->
+<!--<fieldset>-->
+<!--<legend>A form to add a person to the database.</legend>-->
+
+<!--<label for="person">New Person's Name</label>-->
+<!--<input id="name-input" name="name" type="text" placeholder="New Name" required minlength="3">-->
+
+<!--<button type="submit" class="pure-button pure-button-primary">Add</button>-->
+<!--</fieldset>-->
+<!--</form>-->
+<div class="splash-container">
+    <div class="splash">
+        <h1 class="splash-head">A wild survey appears!</h1>
+        <p class="splash-subhead">Would you like to take this survey?</p>
+        <a class="pure-button pure-button-primary" href="{{ url_for("survey") }}">Consent</a>
+        <a class="pure-button" href="{{ url_for("decline") }}">Decline</a>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,40 @@
+body {
+  background: #2b5068;
+}
+
+.splash-container {
+  height: 100%;
+  background: #2b5068;
+}
+
+a.pure-button {
+  font-size: 120%;
+}
+
+.content-wrapper {
+  top: 0;
+  background: none;
+}
+
+.content {
+  margin: 60px;
+  background: white;
+}
+
+form.survey {
+  max-width: 60em;
+  margin: auto;
+}
+
+form.survey input[type=radio], form.survey input[type=checkbox] {
+  width: auto;
+}
+
+.results {
+  max-width: 60em;
+  margin: auto;
+}
+
+.results ul {
+  list-style-type: none;
+}

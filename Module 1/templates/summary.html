@@ -1,0 +1,209 @@
+{% extends "base.html" %}
+{% block title %}Summary{% endblock %}
+{% block head %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+{% endblock %}
+
+{% block content %}
+
+<div class="content-wrapper">
+    <div class="content">
+        <div class="results">
+            <h1>Result Summary</h1>
+            <canvas id="resultsChart"></canvas>
+            <h2>Names</h2>
+            <ul>
+                {% for item in data %}
+                    <li>{{ item['name'] }}</li>
+                {% endfor %}
+            </ul>
+            <h2>Previous Participation</h2>
+            <canvas id="participationChart"></canvas>
+            <h2>Last Time Participated</h2>
+            <canvas id="lastParticipatedChart"></canvas>
+            <h2>Participation Details</h2>
+            <ul>
+                {% for item in data %}
+                    {% if item['participation_info'] is not none %}
+                        <li>{{ item['participation_info'] }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <h2>Want to Learn More</h2>
+            <canvas id="learnMoreChart"></canvas>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var results = [];
+    results = {{ data|tojson }};
+
+    var participationData = [0, 0, 0];
+    var lastParticipatedData = [0, 0, 0, 0];
+    var learnMoreData = [0, 0];
+    var timeSeriesDates = [];
+    var timeSeriesData = [];
+
+    for (var i = 0; i < results.length; i++) {
+        var item = results[i];
+
+        var participation = item['participation'];
+        switch(participation) {
+            case 'yes':
+                participationData[0]++;
+                break;
+            case 'known':
+                participationData[1]++;
+                break;
+            case 'no':
+                participationData[2]++;
+        }
+
+        var last = item['last_participated'];
+        switch(last) {
+            case 'week':
+                lastParticipatedData[0]++;
+                break;
+            case 'month':
+                lastParticipatedData[1]++;
+                break;
+            case 'year':
+                lastParticipatedData[2]++;
+                break;
+            case 'years':
+                lastParticipatedData[3]++;
+                break;
+        }
+
+        var learn = item['learn_more'];
+        if (learn) {
+            learnMoreData[0]++;
+        } else {
+            learnMoreData[1]++;
+        }
+
+        var date = new Date(item['result_time']);
+        var day = date.getUTCMonth() + 1 + "-" + date.getUTCDate() + "-" + date.getUTCFullYear();
+        var index = timeSeriesDates.indexOf(day);
+        if (index < 0) {
+            timeSeriesDates.push(day);
+            timeSeriesData.push(1);
+        } else {
+            timeSeriesData[index]++;
+        }
+    }
+
+    var ctx = $('#resultsChart')[0].getContext('2d');
+    ctx.height = 200;
+    var resultsChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: timeSeriesDates,
+            datasets: [{
+                label: 'Response history',
+                data: timeSeriesData,
+                type: 'line',
+                pointRadius: 5,
+                fill: false,
+                lineTension: 0,
+                borderWidth: 2
+            }]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    distribution: 'series',
+                    ticks: {
+                        source: 'labels'
+                    }
+                }],
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Response Count'
+                    },
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
+        }
+    });
+    ctx = $('#participationChart')[0].getContext('2d');
+    ctx.height = 200;
+    var participationChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Yes', 'No, but know about it', 'No'],
+            datasets: [{
+                label: 'Previous participation',
+                data: participationData
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Response Count'
+                    },
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
+        }
+    });
+    ctx = $('#lastParticipatedChart')[0].getContext('2d');
+    ctx.height = 200;
+    var lastParticipatedChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Less than a week ago', 'Less than a month ago', 'Less than a year ago', 'More than a year ago'],
+            datasets: [{
+                label: 'Last time participated',
+                data: lastParticipatedData
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Response Count'
+                    },
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
+        }
+    });
+    ctx = $('#learnMoreChart')[0].getContext('2d');
+    ctx.height = 200;
+    var learnMoreChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Yes', 'No'],
+            datasets: [{
+                label: 'Want to learn more',
+                data: learnMoreData
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Response Count'
+                    },
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
+        }
+    });
+</script>
+
+{% endblock %}
